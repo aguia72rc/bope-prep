@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preparação BOPE — Ramon</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:        #0d0f12;
+    --bg2:       #161a1f;
+    --bg3:       #1e2329;
+    --border:    #2a303a;
+    --border2:   #343c48;
+    --text:      #e8ecf0;
+    --text2:     #8b95a1;
+    --text3:     #5a6370;
+    --green:     #22c97a;
+    --green-d:   #166b42;
+    --green-bg:  #0d2a1c;
+    --blue:      #3b9cf5;
+    --blue-d:    #1a5fa0;
+    --blue-bg:   #0a1e33;
+    --amber:     #f0a020;
+    --amber-d:   #8a5a08;
+    --amber-bg:  #2a1a04;
+    --red:       #e84040;
+    --red-bg:    #2a0d0d;
+    --coral:     #e05030;
+    --coral-bg:  #2a1008;
+    --purple:    #9b7edb;
+    --purple-bg: #1a1230;
+    --font-head: 'Barlow Condensed', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,15,18,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    padding: 0 1rem;
+    height: 52px;
+  }
+  .nav-brand {
+    font-family: var(--font-head);
+    font-size: 18px; font-weight: 800;
+    letter-spacing: .04em;
+    color: var(--text);
+    text-transform: uppercase;
+    margin-right: auto;
+    white-space: nowrap;
+  }
+  .nav-brand span { color: var(--green); }
+  .nav-tabs { display: flex; gap: 2px; }
+  .nav-tab {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 500;
+    color: var(--text2);
+    background: none; border: none;
+    padding: 6px 12px; border-radius: 6px;
+    cursor: pointer; transition: all .15s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--bg3); }
+  .nav-tab.active { color: var(--green); background: var(--green-bg); }
+
+  /* ── MAIN ── */
+  main { padding-top: 52px; max-width: 900px; margin: 0 auto; }
+
+  .page { display: none; padding: 1.5rem 1rem 3rem; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    color: var(--green); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .hero-title {
+    font-family: var(--font-head);
+    font-size: clamp(36px, 8vw, 64px);
+    font-weight: 800; line-height: 1;
+    text-transform: uppercase; letter-spacing: .02em;
+    margin-bottom: 12px;
+  }
+  .hero-title .accent { color: var(--green); }
+  .hero-sub { font-size: 15px; color: var(--text2); max-width: 480px; line-height: 1.6; }
+
+  /* ── STATS ROW ── */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 1.5rem 0; }
+  .stat-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .stat-card .val {
+    font-family: var(--font-head);
+    font-size: 28px; font-weight: 700; color: var(--text); line-height: 1;
+  }
+  .stat-card .lbl { font-size: 11px; color: var(--text2); margin-top: 4px; }
+  .stat-card .sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+  /* ── PROVAS ── */
+  .prova-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 1.5rem 0; }
+  .prova-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 14px;
+    border-top: 3px solid;
+  }
+  .prova-card.p1 { border-top-color: var(--green); }
+  .prova-card.p2 { border-top-color: var(--blue); }
+  .prova-card.p3 { border-top-color: var(--amber); }
+  .prova-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+  .prova-dist { font-family: var(--font-head); font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.1; }
+  .prova-time { font-size: 13px; font-weight: 500; margin-top: 4px; }
+  .prova-pace { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .p1 .prova-time { color: var(--green); }
+  .p2 .prova-time { color: var(--blue); }
+  .p3 .prova-time { color: var(--amber); }
+
+  /* ── SECTION ── */
+  .section-title {
+    font-family: var(--font-head);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text2); margin: 2rem 0 1rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── FASE CARDS ── */
+  .fase-tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .fase-tab {
+    font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg2); color: var(--text2);
+    cursor: pointer; transition: all .15s;
+  }
+  .fase-tab:hover { border-color: var(--border2); color: var(--text); }
+  .fase-tab.active { background: var(--green-bg); color: var(--green); border-color: var(--green-d); }
+
+  .fase-panel { display: none; }
+  .fase-panel.active { display: block; }
+
+  .fase-header {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; margin-bottom: 12px;
+  }
+  .fase-badge {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+  }
+  .fb-teal   { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-d); }
+  .fb-blue   { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-d); }
+  .fb-amber  { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-d); }
+  .fb-coral  { background: var(--coral-bg); color: var(--coral); border: 1px solid #5a2010; }
+
+  .fase-header h2 { font-family: var(--font-head); font-size: 20px; font-weight: 700; text-transform: uppercase; }
+  .fase-header p  { font-size: 13px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+
+  .week-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin-bottom: 8px;
+  }
+  .week-header {
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--text3);
+    padding: 8px 14px; background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+  .day-row { display: flex; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .day-row:last-child { border-bottom: none; }
+  .day-label { font-size: 11px; font-weight: 600; color: var(--text3); min-width: 28px; padding-top: 2px; text-transform: uppercase; }
+  .day-content { flex: 1; }
+  .day-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .day-desc  { font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+  .int-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+  .dot-e { background: var(--green); }
+  .dot-m { background: var(--amber); }
+  .dot-h { background: var(--red); }
+
+  .tip-box {
+    background: var(--blue-bg); border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px;
+    font-size: 12px; color: var(--text2); line-height: 1.6;
+  }
+  .tip-box strong { color: var(--text); }
+
+  /* ── PACES ── */
+  .vdot-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 1.5rem;
+    display: flex; gap: 20px; align-items: center;
+  }
+  .vdot-num {
+    font-family: var(--font-head);
+    font-size: 64px; font-weight: 800;
+    color: var(--green); line-height: 1;
+  }
+  .vdot-info .label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; }
+  .vdot-info .ref { font-size: 14px; color: var(--text2); margin-top: 4px; }
+  .vdot-info .ref strong { color: var(--text); }
+  .vdot-info .meta { font-size: 13px; color: var(--text2); margin-top: 8px; }
+  .vdot-info .meta b { color: var(--green); }
+
+  .pace-grid { display: flex; flex-direction: column; gap: 8px; }
+  .pace-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer; transition: all .15s;
+  }
+  .pace-card:hover { border-color: var(--border2); background: var(--bg3); }
+  .pace-bar { width: 4px; border-radius: 2px; align-self: stretch; min-height: 40px; }
+  .pace-info { flex: 1; }
+  .pace-zone { font-size: 13px; font-weight: 600; }
+  .pace-use  { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .pace-right { text-align: right; }
+  .pace-val { font-family: var(--font-head); font-size: 22px; font-weight: 700; line-height: 1; }
+  .pace-fc  { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .pace-feel { font-size: 12px; color: var(--text2); line-height: 1.5; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); display: none; }
+  .pace-card.open .pace-feel { display: block; }
+
+  .garmin-section { margin-top: 1.5rem; }
+  .garmin-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .garmin-row:first-child { border-radius: 10px 10px 0 0; }
+  .garmin-row:last-child  { border-bottom: none; border-radius: 0 0 10px 10px; }
+  .garmin-row:hover { background: var(--bg3); }
+  .g-label { font-size: 13px; color: var(--text2); }
+  .g-val   { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--text); }
+  .g-val.highlight { color: var(--green); }
+
+  /* ── MUSCULAÇÃO ── */
+  .week-grid-musc { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; margin-bottom: 1.5rem; }
+  .day-pill-musc {
+    border-radius: 8px; padding: 8px 4px; text-align: center;
+    border: 1px solid var(--border); cursor: pointer;
+    transition: all .15s; background: var(--bg2);
+  }
+  .day-pill-musc:hover { border-color: var(--border2); }
+  .day-pill-musc.active { border-width: 2px; }
+  .dp-name { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; }
+  .dp-type { font-size: 11px; font-weight: 600; }
+  .dp-sub  { font-size: 9px; margin-top: 2px; }
+  .dp-run  { border-color: var(--green-d); }
+  .dp-run  .dp-type { color: var(--green); }
+  .dp-run.active  { background: var(--green-bg); border-color: var(--green); box-shadow: 0 0 0 2px rgba(34,201,122,.2); }
+  .dp-upper { border-color: var(--blue-d); }
+  .dp-upper .dp-type { color: var(--blue); }
+  .dp-upper.active { background: var(--blue-bg); border-color: var(--blue); box-shadow: 0 0 0 2px rgba(59,156,245,.2); }
+  .dp-lower { border-color: var(--amber-d); }
+  .dp-lower .dp-type { color: var(--amber); }
+  .dp-lower.active { background: var(--amber-bg); border-color: var(--amber); box-shadow: 0 0 0 2px rgba(240,160,32,.2); }
+
+  .musc-panel { display: none; }
+  .musc-panel.active { display: block; }
+
+  .musc-header { margin-bottom: 14px; }
+  .musc-badge {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+  }
+  .mb-upper { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-d); }
+  .mb-lower { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-d); }
+  .mb-run   { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-d); }
+  .musc-title { font-family: var(--font-head); font-size: 20px; font-weight: 700; text-transform: uppercase; }
+  .musc-sub { font-size: 13px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+
+  .ex-list { display: flex; flex-direction: column; gap: 6px; }
+  .ex-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .ex-card-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; cursor: pointer;
+    transition: background .12s;
+  }
+  .ex-card-header:hover { background: var(--bg3); }
+  .ex-num-badge {
+    font-family: var(--font-head);
+    font-size: 13px; font-weight: 700; color: var(--text3);
+    min-width: 24px;
+  }
+  .ex-main { flex: 1; }
+  .ex-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .ex-muscles { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .ex-meta { text-align: right; }
+  .ex-series { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .ex-rest-lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .ex-body { display: none; padding: 0 14px 12px 50px; }
+  .ex-body.open { display: block; }
+  .ex-tip { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+  .timer-btn {
+    font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 6px;
+    border: 1px solid var(--border2); background: var(--bg3);
+    color: var(--text); cursor: pointer; transition: all .15s;
+  }
+  .timer-btn:hover { border-color: var(--green-d); color: var(--green); }
+  .timer-btn.running { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .done-btn {
+    font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 6px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text2); cursor: pointer; transition: all .15s;
+    margin-left: 8px;
+  }
+  .done-btn.done { background: var(--green-bg); border-color: var(--green-d); color: var(--green); }
+  .ex-card.completed .ex-name { text-decoration: line-through; opacity: .5; }
+
+  /* Timer global */
+  .timer-global {
+    position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: 12px; padding: 10px 20px;
+    display: none; align-items: center; gap: 16px;
+    min-width: 220px; z-index: 99;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  }
+  .timer-global.show { display: flex; }
+  .timer-info { flex: 1; }
+  .timer-lbl  { font-size: 10px; color: var(--text2); }
+  .timer-disp { font-family: var(--font-head); font-size: 26px; font-weight: 700; color: var(--text); line-height: 1; }
+  .timer-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; margin-top: 4px; }
+  .timer-bar-fill { height: 3px; background: var(--green); border-radius: 2px; transition: width .9s linear; }
+  .timer-cancel {
+    font-size: 12px; color: var(--text3); background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .timer-cancel:hover { color: var(--text); }
+
+  /* ── PROGRESSO ── */
+  .progress-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; margin-bottom: 10px;
+  }
+  .progress-card h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+  .log-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .log-input {
+    flex: 1; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 10px; color: var(--text);
+    font-family: var(--font-body); font-size: 13px; outline: none;
+  }
+  .log-input:focus { border-color: var(--green-d); }
+  .log-btn {
+    background: var(--green-bg); border: 1px solid var(--green-d);
+    color: var(--green); border-radius: 6px; padding: 8px 14px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+  .log-btn:hover { background: var(--green); color: var(--bg); }
+  .log-list { margin-top: 8px; }
+  .log-item {
+    display: flex; justify-content: space-between;
+    padding: 6px 10px; border-radius: 6px;
+    font-size: 12px; color: var(--text2);
+    border-bottom: 1px solid var(--border);
+  }
+  .log-item:last-child { border-bottom: none; }
+  .log-item .log-val { font-family: var(--font-head); font-size: 15px; font-weight: 700; color: var(--green); }
+  .empty-log { font-size: 12px; color: var(--text3); text-align: center; padding: 16px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 0 .75rem; }
+    .nav-tab { font-size: 11px; padding: 6px 8px; }
+    .nav-brand { font-size: 15px; }
+    .hero-sub { font-size: 13px; }
+    .stats-row { grid-template-columns: repeat(3,1fr); }
+    .prova-grid { grid-template-columns: 1fr; }
+    .vdot-card { flex-direction: column; gap: 12px; }
+    .vdot-num { font-size: 48px; }
+    .week-grid-musc { gap: 4px; }
+    .dp-sub { display: none; }
+    .ex-body { padding-left: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">BOPE<span>.</span>PREP</span>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Início</button>
+    <button class="nav-tab" onclick="showPage('corrida')">Corrida</button>
+    <button class="nav-tab" onclick="showPage('paces')">Paces</button>
+    <button class="nav-tab" onclick="showPage('musculacao')">Musculação</button>
+    <button class="nav-tab" onclick="showPage('progresso')">Progresso</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<main>
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-eyebrow">Preparação Teste Físico</div>
+    <h1 class="hero-title">MISSÃO<br><span class="accent">BOPE</span></h1>
+    <p class="hero-sub">Plano de 24 semanas para corrida, força e velocidade. Tudo que você precisa para passar no teste físico.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="val">24</div>
+      <div class="lbl">Semanas de treino</div>
+      <div class="sub">Fases 1–4</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">7</div>
+      <div class="lbl">Treinos por semana</div>
+      <div class="sub">3 corridas + 4 musculação</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">36</div>
+      <div class="lbl">Seu VDOT atual</div>
+      <div class="sub">Meta: VDOT 42+</div>
+    </div>
+  </div>
+
+  <p class="section-title">Provas do Teste</p>
+  <div class="prova-grid">
+    <div class="prova-card p1">
+      <div class="prova-label">Prova 1</div>
+      <div class="prova-dist">3.200m</div>
+      <div class="prova-time">Até 14'30"</div>
+      <div class="prova-pace">Pace 4:32/km</div>
+    </div>
+    <div class="prova-card p2">
+      <div class="prova-label">Prova 2</div>
+      <div class="prova-dist">100m</div>
+      <div class="prova-time">Até 15s</div>
+      <div class="prova-pace">Sprint máximo</div>
+    </div>
+    <div class="prova-card p3">
+      <div class="prova-label">Prova 3</div>
+      <div class="prova-dist">10km</div>
+      <div class="prova-time">Até 60 min</div>
+      <div class="prova-pace">Calça + coturno</div>
+    </div>
+  </div>
+
+  <p class="section-title">Visão Geral da Semana</p>
+  <div class="week-grid-musc" style="margin-bottom:0">
+    <div class="day-pill-musc dp-run"><div class="dp-name">Seg</div><div class="dp-type">Corrida</div><div class="dp-sub">Plano</div></div>
+    <div class="day-pill-musc dp-upper"><div class="dp-name">Ter</div><div class="dp-type">Upper A</div><div class="dp-sub">Empurrar</div></div>
+    <div class="day-pill-musc dp-run"><div class="dp-name">Qua</div><div class="dp-type">Corrida</div><div class="dp-sub">Qualidade</div></div>
+    <div class="day-pill-musc dp-lower"><div class="dp-name">Qui</div><div class="dp-type">Lower A</div><div class="dp-sub">Pernas</div></div>
+    <div class="day-pill-musc dp-run"><div class="dp-name">Sex</div><div class="dp-type">Corrida</div><div class="dp-sub">Longa</div></div>
+    <div class="day-pill-musc dp-upper"><div class="dp-name">Sáb</div><div class="dp-type">Upper B</div><div class="dp-sub">Puxar</div></div>
+    <div class="day-pill-musc dp-lower"><div class="dp-name">Dom</div><div class="dp-type">Lower B</div><div class="dp-sub">Posterior</div></div>
+  </div>
+
+  <div class="tip-box" style="margin-top:14px">
+    <strong>Dica de hoje:</strong> Anote seus pesos e tempos na aba Progresso toda semana. Carga progressiva + proteína (1,8–2,2g/kg/dia) + descanso = ganho de massa mesmo treinando para o BOPE.
+  </div>
+</div>
+
+<!-- CORRIDA -->
+<div class="page" id="page-corrida">
+  <div class="hero" style="padding-top:2rem">
+    <div class="hero-eyebrow">Plano de Corrida · 24 Semanas</div>
+    <h2 class="hero-title" style="font-size:clamp(28px,6vw,48px)">PROGRESSÃO<br><span class="accent">AERÓBICA</span></h2>
+  </div>
+
+  <div class="fase-tabs">
+    <button class="fase-tab active" onclick="showFase(0)">Fase 1 — Base</button>
+    <button class="fase-tab" onclick="showFase(1)">Fase 2 — Desenvolvimento</button>
+    <button class="fase-tab" onclick="showFase(2)">Fase 3 — Específico</button>
+    <button class="fase-tab" onclick="showFase(3)">Fase 4 — Afunilamento</button>
+  </div>
+
+  <!-- FASE 1 -->
+  <div class="fase-panel active" id="fase-0">
+    <div class="fase-header">
+      <span class="fase-badge fb-teal">Semanas 1–6 · Base Aeróbica</span>
+      <h2>Construindo o motor</h2>
+      <p>Criar tolerância ao impacto, desenvolver base aeróbica e adaptar articulações. O jiu-jitsu já fornece base cardiovascular — a progressão pode ser mais rápida que o normal.</p>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 1–2</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida contínua 20 min</div><div class="day-desc">Pace Easy 6:40–7:20/km. Postura: tronco ereto, olhar no horizonte, aterrissar com o meio do pé.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-m"></span>Strides + corrida 20 min</div><div class="day-desc">20 min Easy + 4× acelerações progressivas de 80m (80% do máximo). Recuperação caminhando de volta.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida longa 25 min</div><div class="day-desc">Pace Easy. Sessão mais importante da semana para base aeróbica.</div></div></div>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 3–4</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida contínua 28 min</div><div class="day-desc">Pace Easy 6:40–7:20/km. Nunca aumente mais de 10% de volume por semana.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-m"></span>Fartlek curto 25 min</div><div class="day-desc">10 min aquecimento + alternando 1 min rápido (Limiar 5:30–5:40/km) / 2 min suave × 5–6 ciclos + 5 min desaquecimento.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida longa 32 min</div><div class="day-desc">Pace Easy. Meta: completar 3.200m sem parar com tranquilidade ao final desta fase.</div></div></div>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 5–6</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida 30 min + ABF</div><div class="day-desc">30 min Easy + 3 séries de abdominais e flexões para preparar o teste completo.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Intervalado 6× 400m</div><div class="day-desc">Aquecimento 10 min. 6× 400m a 5:00–5:10/km com 90s de descanso entre cada. Desaquecimento 5 min.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida longa 38–40 min</div><div class="day-desc">Pace Easy. Maior volume até agora — nunca sacrifique o ritmo para aumentar o tempo.</div></div></div>
+    </div>
+    <div class="tip-box"><strong>Dica desta fase:</strong> Coloque a corrida antes do jiu-jitsu nos dias de treino duplo. O corpo adapta durante o sono, não durante o treino.</div>
+  </div>
+
+  <!-- FASE 2 -->
+  <div class="fase-panel" id="fase-1">
+    <div class="fase-header">
+      <span class="fase-badge fb-blue">Semanas 7–12 · Desenvolvimento</span>
+      <h2>Aumentando o ritmo</h2>
+      <p>Baixar o tempo nos 3.200m, introduzir velocidade para o tiro de 100m e aumentar resistência para o 10km. O corpo já está adaptado — hora de aumentar a carga.</p>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 7–9</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-m"></span>Tempo run 25 min</div><div class="day-desc">10 min aquecimento + 15 min no limiar (5:30–5:40/km, ~88–92% FC máx) + 5 min desaquecimento.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Velocidade: 6× tiros 100m</div><div class="day-desc">Aquecimento 15 min. 6× 100m com saída de pé, foco em aceleração progressiva. Recuperação total (3–4 min) entre cada. Desaquecimento 10 min.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida longa 45 min</div><div class="day-desc">Pace Easy. Progressivo: 42 → 45 → 48 min ao longo das 3 semanas.</div></div></div>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 10–12</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Intervalado 8× 400m</div><div class="day-desc">Aquecimento 10 min. 8× 400m a 5:00–5:10/km com 60–75s de recuperação. Desaquecimento 10 min.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Velocidade: 8× 100m + 3× 60m</div><div class="day-desc">Aquecimento ativo 15 min com drills. 8× 100m + 3× 60m máximos. Recuperação completa entre cada.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida longa 55–60 min</div><div class="day-desc">Pace Easy. Primeiros 20 min finais com coturno para adaptação inicial ao equipamento.</div></div></div>
+    </div>
+    <div class="tip-box"><strong>Dica:</strong> Na semana 10, faça um teste dos 3.200m em ritmo de prova. Alvo desta fase: completar em 15'00"–15'30". Se estiver atrás, repita mais uma semana antes de avançar.</div>
+  </div>
+
+  <!-- FASE 3 -->
+  <div class="fase-panel" id="fase-2">
+    <div class="fase-header">
+      <span class="fase-badge fb-amber">Semanas 13–20 · Específico</span>
+      <h2>Simulando o teste</h2>
+      <p>Treinar nas condições exatas do teste. Coturno e calça nas sessões longas, tiros de 100m com menor descanso e 3.200m em ritmo de prova (4:32/km).</p>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 13–16</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>3.200m em ritmo de prova</div><div class="day-desc">Aquecimento 15 min. 3.200m tentando igualar o ritmo alvo (4:32/km). Registre o tempo. Desaquecimento 10 min.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Velocidade 10× 100m</div><div class="day-desc">Aquecimento ativo 15 min. 10× 100m com recuperação de 2 min. Nas últimas 3 reps, mantenha o mesmo tempo das primeiras.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-m"></span>10km com coturno e calça</div><div class="day-desc">Ritmo moderado — adaptação, não teste. Foco em postura com peso extra. Pace alvo: 5:50–6:10/km.</div></div></div>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 17–20</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Série específica 3.200m</div><div class="day-desc">Aquecimento + 2× 1.600m no ritmo alvo (intervalo de 3 min) + desaquecimento. Simula o volume total da prova.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Bloco de velocidade</div><div class="day-desc">15 min aquecimento ativo. 3× 60m máximos + 8× 100m no ritmo alvo (15s) com 90s de recuperação.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-m"></span>Simulação 10km com carga</div><div class="day-desc">10km coturno + calça em ritmo progressivo. Meta desta fase: abaixo de 56 min.</div></div></div>
+    </div>
+    <div class="tip-box"><strong>Dica:</strong> Compre o coturno com antecedência e use nos treinos. Proteja os pés com meias de compressão dupla. Durma 8h e priorize proteína — fase de maior volume do ciclo.</div>
+  </div>
+
+  <!-- FASE 4 -->
+  <div class="fase-panel" id="fase-3">
+    <div class="fase-header">
+      <span class="fase-badge fb-coral">Semanas 21–24 · Afunilamento</span>
+      <h2>Chegando no pico</h2>
+      <p>Reduzir volume mantendo intensidade. É nessa fase que os ganhos aparecem — não é hora de melhorar, é hora de chegar descansado no teste.</p>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 21–22</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida 30 min + strides</div><div class="day-desc">20 min Easy + 5× acelerações de 80m. Sem pressão — manter ritmo neuromuscular.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-h"></span>Teste oficial: 3.200m + 100m</div><div class="day-desc">Aquecimento 20 min. Simule o dia do teste: 3.200m completo, 30 min recuperação, depois 3× 100m máximos. Anote tudo.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>10km fácil com coturno</div><div class="day-desc">Pace bem confortável (6:00–6:20/km). Manter adaptação ao coturno sem fadigar.</div></div></div>
+    </div>
+    <div class="week-card">
+      <div class="week-header">Semanas 23–24 — Semana do Teste</div>
+      <div class="day-row"><span class="day-label">Seg</span><div class="day-content"><div class="day-title"><span class="int-dot dot-e"></span>Corrida leve 20 min</div><div class="day-desc">Ritmo passeio. Nenhum esforço. Só ativar as pernas.</div></div></div>
+      <div class="day-row"><span class="day-label">Qua</span><div class="day-content"><div class="day-title"><span class="int-dot dot-m"></span>Ativação 15 min + 3× 100m</div><div class="day-desc">Corrida leve 15 min + 3 tiros no ritmo alvo. Último dia de treino real.</div></div></div>
+      <div class="day-row"><span class="day-label">Sex</span><div class="day-content"><div class="day-title">🏁 Descanso total</div><div class="day-desc">Hidrate, durma bem, prepare o equipamento. Seu treino está feito.</div></div></div>
+    </div>
+    <div class="tip-box"><strong>Na véspera:</strong> Carboidrato à noite (arroz, batata, macarrão). Café da manhã leve 2–3h antes. Aquecimento de 15–20 min antes de cada prova. O 10km com coturno é o último — guarde energia mental para ele.</div>
+  </div>
+</div>
+
+<!-- PACES -->
+<div class="page" id="page-paces">
+  <div class="hero" style="padding-top:2rem">
+    <div class="hero-eyebrow">Paces · Método Jack Daniels VDOT</div>
+    <h2 class="hero-title" style="font-size:clamp(28px,6vw,48px)">ZONAS DE<br><span class="accent">TREINO</span></h2>
+  </div>
+
+  <div class="vdot-card">
+    <div class="vdot-num">36</div>
+    <div class="vdot-info">
+      <div class="label">Seu VDOT atual</div>
+      <div class="ref">Baseado em <strong>5km em 30:00</strong> · pace médio <strong>6:00/km</strong></div>
+      <div class="meta">Meta para o teste: VDOT <b>42+</b> → recalcule os paces a cada novo teste de 5km</div>
+    </div>
+  </div>
+
+  <p class="section-title">Zonas · Toque para ver a sensação</p>
+  <div class="pace-grid">
+    <div class="pace-card" onclick="togglePace(this)">
+      <div class="pace-bar" style="background:var(--green)"></div>
+      <div class="pace-info">
+        <div class="pace-zone" style="color:var(--green)">Easy (E)</div>
+        <div class="pace-use">Corridas longas · aquecimento · desaquecimento</div>
+        <div class="pace-feel">Você consegue conversar em frases completas. Parece fácil demais — e deve ser. Não force aqui. É nessa zona que você constrói a base aeróbica.</div>
+      </div>
+      <div class="pace-right">
+        <div class="pace-val" style="color:var(--green)">6:40–7:20</div>
+        <div class="pace-fc">65–79% FC máx</div>
+      </div>
+    </div>
+    <div class="pace-card" onclick="togglePace(this)">
+      <div class="pace-bar" style="background:var(--blue)"></div>
+      <div class="pace-info">
+        <div class="pace-zone" style="color:var(--blue)">Maratona (M)</div>
+        <div class="pace-use">Fartlek · corridas moderadas</div>
+        <div class="pace-feel">Conversa ainda possível, mas frases curtas. Ritmo controlado e sustentável por longos períodos. Usado nos fartlek e corridas de desenvolvimento.</div>
+      </div>
+      <div class="pace-right">
+        <div class="pace-val" style="color:var(--blue)">6:10–6:25</div>
+        <div class="pace-fc">80–85% FC máx</div>
+      </div>
+    </div>
+    <div class="pace-card" onclick="togglePace(this)">
+      <div class="pace-bar" style="background:var(--amber)"></div>
+      <div class="pace-info">
+        <div class="pace-zone" style="color:var(--amber)">Limiar (T)</div>
+        <div class="pace-use">Tempo runs · fartlek intenso</div>
+        <div class="pace-feel">Desconfortável mas controlável. Falar fica difícil — só palavras soltas. Você aguenta 20–40 min nesse ritmo. Treino mais eficiente para melhorar o ritmo de prova.</div>
+      </div>
+      <div class="pace-right">
+        <div class="pace-val" style="color:var(--amber)">5:30–5:40</div>
+        <div class="pace-fc">88–92% FC máx</div>
+      </div>
+    </div>
+    <div class="pace-card" onclick="togglePace(this)">
+      <div class="pace-bar" style="background:var(--red)"></div>
+      <div class="pace-info">
+        <div class="pace-zone" style="color:var(--red)">Intervalado (I)</div>
+        <div class="pace-use">Séries de 400m · 1.600m</div>
+        <div class="pace-feel">Difícil falar qualquer coisa. Sustentável por 3–5 min, não mais. A recuperação entre séries é obrigatória — não é opcional. Treino de VO₂máx.</div>
+      </div>
+      <div class="pace-right">
+        <div class="pace-val" style="color:var(--red)">5:00–5:10</div>
+        <div class="pace-fc">~100% VO₂máx</div>
+      </div>
+    </div>
+    <div class="pace-card" onclick="togglePace(this)">
+      <div class="pace-bar" style="background:var(--coral)"></div>
+      <div class="pace-info">
+        <div class="pace-zone" style="color:var(--coral)">Repetição (R)</div>
+        <div class="pace-use">Tiros de 100m · acelerações</div>
+        <div class="pace-feel">Esforço máximo ou quase. Para os 100m do teste você precisa deste pace — equivale a ~26–27s nos 100m. Recuperação total entre repetições é essencial.</div>
+      </div>
+      <div class="pace-right">
+        <div class="pace-val" style="color:var(--coral)">4:20–4:35</div>
+        <div class="pace-fc">Máximo / sprint</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title">Alertas para o Garmin</p>
+  <div class="garmin-section">
+    <div class="garmin-row"><span class="g-label">Easy / Corrida longa</span><span class="g-val">6:40 – 7:20 /km</span></div>
+    <div class="garmin-row"><span class="g-label">Tempo run (Limiar)</span><span class="g-val">5:30 – 5:40 /km</span></div>
+    <div class="garmin-row"><span class="g-label">Intervalado 400m</span><span class="g-val">5:00 – 5:10 /km</span></div>
+    <div class="garmin-row"><span class="g-label">Meta 3.200m BOPE</span><span class="g-val highlight">4:32 /km</span></div>
+    <div class="garmin-row"><span class="g-label">Meta 10km com coturno</span><span class="g-val highlight">5:50 – 6:00 /km</span></div>
+  </div>
+</div>
+
+<!-- MUSCULAÇÃO -->
+<div class="page" id="page-musculacao">
+  <div class="hero" style="padding-top:2rem">
+    <div class="hero-eyebrow">Upper / Lower · 4 dias</div>
+    <h2 class="hero-title" style="font-size:clamp(28px,6vw,48px)">FORÇA E<br><span class="accent">MASSA</span></h2>
+  </div>
+
+  <div class="week-grid-musc">
+    <div class="day-pill-musc dp-run" onclick="showMusc(0)"><div class="dp-name">Seg</div><div class="dp-type">Corrida</div><div class="dp-sub">Plano</div></div>
+    <div class="day-pill-musc dp-upper active" onclick="showMusc(1)"><div class="dp-name">Ter</div><div class="dp-type">Upper A</div><div class="dp-sub">Empurrar</div></div>
+    <div class="day-pill-musc dp-run" onclick="showMusc(2)"><div class="dp-name">Qua</div><div class="dp-type">Corrida</div><div class="dp-sub">Qualidade</div></div>
+    <div class="day-pill-musc dp-lower" onclick="showMusc(3)"><div class="dp-name">Qui</div><div class="dp-type">Lower A</div><div class="dp-sub">Pernas</div></div>
+    <div class="day-pill-musc dp-run" onclick="showMusc(4)"><div class="dp-name">Sex</div><div class="dp-type">Corrida</div><div class="dp-sub">Longa</div></div>
+    <div class="day-pill-musc dp-upper" onclick="showMusc(5)"><div class="dp-name">Sáb</div><div class="dp-type">Upper B</div><div class="dp-sub">Puxar</div></div>
+    <div class="day-pill-musc dp-lower" onclick="showMusc(6)"><div class="dp-name">Dom</div><div class="dp-type">Lower B</div><div class="dp-sub">Posterior</div></div>
+  </div>
+
+  <!-- Corrida (0,2,4) -->
+  <div class="musc-panel" id="musc-0">
+    <div class="musc-header"><span class="musc-badge mb-run">Corrida</span><div class="musc-title">DIA DE CORRIDA</div><div class="musc-sub">Siga o plano de corrida prescrito. Consulte a aba Corrida para a sessão da semana atual.</div></div>
+    <div class="tip-box"><strong>Dica:</strong> Não faça musculação antes da corrida neste dia. Se quiser adicionar algo, faça 10 min de mobilidade após a corrida.</div>
+  </div>
+  <div class="musc-panel" id="musc-2"><div class="musc-header"><span class="musc-badge mb-run">Corrida</span><div class="musc-title">DIA DE CORRIDA</div><div class="musc-sub">Geralmente a sessão de qualidade — fartlek, intervalados ou tempo run. Consulte o plano.</div></div><div class="tip-box"><strong>Dica:</strong> Após o Upper A de terça, as pernas estão descansadas — ótimo dia para os intervalados de 400m ou tiros de 100m.</div></div>
+  <div class="musc-panel" id="musc-4"><div class="musc-header"><span class="musc-badge mb-run">Corrida</span><div class="musc-title">CORRIDA LONGA</div><div class="musc-sub">A corrida mais longa da semana — ritmo Easy (6:40–7:20/km). Foco em volume e resistência aeróbica.</div></div><div class="tip-box"><strong>Dica:</strong> A partir da Fase 2, inclua os últimos 20 min com coturno para adaptação progressiva ao equipamento do teste.</div></div>
+
+  <!-- Upper A -->
+  <div class="musc-panel active" id="musc-1">
+    <div class="musc-header">
+      <span class="musc-badge mb-upper">Terça · Upper A — Empurrar + Bíceps</span>
+      <div class="musc-title">PEITO · OMBROS · TRÍCEPS · BÍCEPS</div>
+      <div class="musc-sub">Foco em movimentos de empurrar. 90s de descanso nos compostos, 60s nos isolamentos. Carga progressiva toda semana.</div>
+    </div>
+    <div class="ex-list" id="exlist-upper-a"></div>
+    <div class="tip-box" style="margin-top:10px"><strong>Volume total:</strong> 20 séries. Quando atingir o limite superior das reps com boa técnica, aumente o peso na próxima sessão.</div>
+  </div>
+
+  <!-- Lower A -->
+  <div class="musc-panel" id="musc-3">
+    <div class="musc-header">
+      <span class="musc-badge mb-lower">Quinta · Lower A — Quadríceps dominante</span>
+      <div class="musc-title">QUADRÍCEPS · GLÚTEOS · PANTURRILHAS · CORE</div>
+      <div class="musc-sub">Foco em movimentos de agachar. 2 min de descanso no agachamento — é o exercício mais exigente do programa.</div>
+    </div>
+    <div class="ex-list" id="exlist-lower-a"></div>
+    <div class="tip-box" style="margin-top:10px"><strong>Atenção:</strong> Se as pernas estiverem cansadas da corrida de quarta, reduza o peso em 20% e mantenha a técnica perfeita.</div>
+  </div>
+
+  <!-- Upper B -->
+  <div class="musc-panel" id="musc-5">
+    <div class="musc-header">
+      <span class="musc-badge mb-upper">Sábado · Upper B — Puxar + Tríceps</span>
+      <div class="musc-title">COSTAS · BÍCEPS · OMBROS POST. · TRÍCEPS</div>
+      <div class="musc-sub">A barra fixa é o exercício mais importante deste dia — diretamente cobrado no teste do BOPE. Anote o número de reps toda semana.</div>
+    </div>
+    <div class="ex-list" id="exlist-upper-b"></div>
+    <div class="tip-box" style="margin-top:10px"><strong>Meta semanal:</strong> Anote as reps da barra fixa na aba Progresso. Esse número crescendo é o termômetro do teste.</div>
+  </div>
+
+  <!-- Lower B -->
+  <div class="musc-panel" id="musc-6">
+    <div class="musc-header">
+      <span class="musc-badge mb-lower">Domingo · Lower B — Posterior dominante</span>
+      <div class="musc-title">ISQUIOTIBIAIS · GLÚTEOS · ADUTORES · CORE</div>
+      <div class="musc-sub">Foco em extensão de quadril. O levantamento terra e o hip thrust dão potência de quadril para os tiros de 100m e o 10km com coturno.</div>
+    </div>
+    <div class="ex-list" id="exlist-lower-b"></div>
+    <div class="tip-box" style="margin-top:10px"><strong>Por que Lower B?</strong> Equilibra o Lower A e fortalece a cadeia posterior — essencial para manter a postura nos últimos km do teste.</div>
+  </div>
+</div>
+
+<!-- PROGRESSO -->
+<div class="page" id="page-progresso">
+  <div class="hero" style="padding-top:2rem">
+    <div class="hero-eyebrow">Registro Semanal</div>
+    <h2 class="hero-title" style="font-size:clamp(28px,6vw,48px)">MEU<br><span class="accent">PROGRESSO</span></h2>
+  </div>
+
+  <p class="section-title">Corrida · 5km de referência</p>
+  <div class="progress-card">
+    <h3>Teste de 5km</h3>
+    <div class="log-row">
+      <input class="log-input" id="inp-5k" placeholder="Ex: 28:30 (mm:ss)" type="text">
+      <button class="log-btn" onclick="addLog('5k', document.getElementById('inp-5k'))">Salvar</button>
+    </div>
+    <div class="log-list" id="log-5k"><div class="empty-log">Nenhum registro ainda</div></div>
+  </div>
+
+  <p class="section-title">Barra fixa · Reps máximas</p>
+  <div class="progress-card">
+    <h3>Barra Fixa (sábado)</h3>
+    <div class="log-row">
+      <input class="log-input" id="inp-barra" placeholder="Ex: 8 reps" type="text">
+      <button class="log-btn" onclick="addLog('barra', document.getElementById('inp-barra'))">Salvar</button>
+    </div>
+    <div class="log-list" id="log-barra"><div class="empty-log">Nenhum registro ainda</div></div>
+  </div>
+
+  <p class="section-title">Musculação · Cargas principais</p>
+  <div class="progress-card">
+    <h3>Agachamento</h3>
+    <div class="log-row">
+      <input class="log-input" id="inp-agach" placeholder="Ex: 60kg × 8" type="text">
+      <button class="log-btn" onclick="addLog('agach', document.getElementById('inp-agach'))">Salvar</button>
+    </div>
+    <div class="log-list" id="log-agach"><div class="empty-log">Nenhum registro ainda</div></div>
+  </div>
+  <div class="progress-card">
+    <h3>Levantamento Terra</h3>
+    <div class="log-row">
+      <input class="log-input" id="inp-terra" placeholder="Ex: 80kg × 5" type="text">
+      <button class="log-btn" onclick="addLog('terra', document.getElementById('inp-terra'))">Salvar</button>
+    </div>
+    <div class="log-list" id="log-terra"><div class="empty-log">Nenhum registro ainda</div></div>
+  </div>
+  <div class="progress-card">
+    <h3>Supino Reto</h3>
+    <div class="log-row">
+      <input class="log-input" id="inp-supino" placeholder="Ex: 70kg × 8" type="text">
+      <button class="log-btn" onclick="addLog('supino', document.getElementById('inp-supino'))">Salvar</button>
+    </div>
+    <div class="log-list" id="log-supino"><div class="empty-log">Nenhum registro ainda</div></div>
+  </div>
+</div>
+</main>
+
+<!-- Timer Global -->
+<div class="timer-global" id="timer-global">
+  <div class="timer-info">
+    <div class="timer-lbl" id="t-lbl">Descanso</div>
+    <div class="timer-disp" id="t-disp">1:30</div>
+    <div class="timer-bar-wrap"><div class="timer-bar-fill" id="t-bar" style="width:100%"></div></div>
+  </div>
+  <button class="timer-cancel" onclick="cancelTimer()">✕</button>
+</div>
+
+<script>
+// ── NAV ──────────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const map = { home: 0, corrida: 1, paces: 2, musculacao: 3, progresso: 4 };
+  tabs[map[id]].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── FASES CORRIDA ─────────────────────────────────────────────
+function showFase(n) {
+  document.querySelectorAll('.fase-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.fase-tab').forEach((t,i) => t.classList.toggle('active', i===n));
+}
+
+// ── PACES TOGGLE ─────────────────────────────────────────────
+function togglePace(el) { el.classList.toggle('open'); }
+
+// ── TIMER ─────────────────────────────────────────────────────
+let tInt = null, tTotal = 0, tLeft = 0, tBtnCur = null;
+function startTimer(secs, label, btn) {
+  if (tInt) { clearInterval(tInt); if (tBtnCur) tBtnCur.classList.remove('running'); }
+  if (tBtnCur === btn && tLeft > 0) { cancelTimer(); return; }
+  tTotal = secs; tLeft = secs; tBtnCur = btn;
+  if (btn) btn.classList.add('running');
+  const g = document.getElementById('timer-global');
+  const lbl = document.getElementById('t-lbl');
+  const disp = document.getElementById('t-disp');
+  const bar = document.getElementById('t-bar');
+  g.classList.add('show');
+  lbl.textContent = label;
+  disp.textContent = fmt(tLeft);
+  bar.style.width = '100%';
+  tInt = setInterval(() => {
+    tLeft--;
+    disp.textContent = fmt(tLeft);
+    bar.style.width = Math.round(tLeft/tTotal*100) + '%';
+    if (tLeft <= 0) { cancelTimer(); }
+  }, 1000);
+}
+function cancelTimer() {
+  if (tInt) clearInterval(tInt);
+  tInt = null; tLeft = 0;
+  if (tBtnCur) tBtnCur.classList.remove('running');
+  tBtnCur = null;
+  document.getElementById('timer-global').classList.remove('show');
+}
+function fmt(s) { return Math.floor(s/60) + ':' + (s%60<10?'0':'') + s%60; }
+
+// ── MUSCULAÇÃO PILLS ──────────────────────────────────────────
+function showMusc(n) {
+  document.querySelectorAll('.musc-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  const pills = document.querySelectorAll('#page-musculacao .day-pill-musc');
+  pills.forEach((p,i) => p.classList.toggle('active', i===n));
+}
+
+// ── EXERCÍCIOS ────────────────────────────────────────────────
+const exercises = {
+  'upper-a': [
+    { name: 'Supino reto com barra', tip: 'Escápulas retraídas, barra toca o peito, sobe em linha reta. Base de força de empurrar.', series: '4 × 8–10', rest: 90, muscles: 'Peitoral · Tríceps · Ombros' },
+    { name: 'Supino inclinado c/ halteres', tip: 'Banco a 30–45°. Ativa peitoral superior e deltoides anteriores.', series: '3 × 10–12', rest: 75, muscles: 'Peitoral sup. · Ombros' },
+    { name: 'Desenvolvimento militar c/ barra', tip: 'Sentado. Barra desce até altura do queixo, sobe com braços estendidos.', series: '4 × 8–10', rest: 90, muscles: 'Deltoides · Tríceps' },
+    { name: 'Elevação lateral c/ halteres', tip: 'Cotovelos levemente fletidos. Suba até a altura do ombro. Controle a descida.', series: '3 × 12–15', rest: 60, muscles: 'Deltoides lateral' },
+    { name: 'Tríceps no cabo (corda)', tip: 'Cotovelos fixos ao lado do corpo. Abra a corda ao final do movimento.', series: '3 × 12', rest: 60, muscles: 'Tríceps' },
+    { name: 'Rosca direta c/ barra W', tip: 'Cotovelos fixos. Suba controlado, desça em 3s. Não balance o tronco.', series: '3 × 10–12', rest: 60, muscles: 'Bíceps' },
+  ],
+  'lower-a': [
+    { name: 'Agachamento livre c/ barra', tip: 'Rei dos exercícios. Desça até 90°, suba explosivo. Core contraído o tempo todo.', series: '4 × 6–8', rest: 120, muscles: 'Quadríceps · Glúteos · Core' },
+    { name: 'Leg press 45°', tip: 'Pés no meio da plataforma. Joelhos a 90°. Volume complementar ao agachamento.', series: '3 × 12', rest: 90, muscles: 'Quadríceps · Glúteos' },
+    { name: 'Avanço caminhando c/ halteres', tip: 'Simula a passada. Joelho traseiro quase no chão, tronco ereto, passo largo.', series: '3 × 10 cada', rest: 75, muscles: 'Glúteos · Quadríceps' },
+    { name: 'Cadeira extensora', tip: 'Isolamento do quadríceps. Segure 1s no topo. Peso moderado — não é para força máxima.', series: '3 × 15', rest: 60, muscles: 'Quadríceps' },
+    { name: 'Panturrilha em pé (máquina)', tip: 'Suba em 1s, segure 2s no topo, desça em 3s. Essencial para propulsão na corrida.', series: '4 × 15–20', rest: 45, muscles: 'Gastrocnêmio · Sóleo' },
+    { name: 'Prancha frontal + lateral', tip: '45s frontal + 30s cada lado sem pausa. Core estabilizador para corridas longas.', series: '3 × 45s+30s', rest: 45, muscles: 'Core · Oblíquos' },
+  ],
+  'upper-b': [
+    { name: 'Barra fixa (pegada pronada)', tip: 'O exercício do teste BOPE. Máximo de reps com técnica perfeita. Registre o número toda semana na aba Progresso.', series: '4 × máx.', rest: 120, muscles: 'Latíssimo · Bíceps · Romboides' },
+    { name: 'Remada curvada c/ barra', tip: 'Tronco a 45°, puxe a barra até o abdômen. Melhor para espessura das costas.', series: '4 × 8–10', rest: 90, muscles: 'Costas médias · Bíceps' },
+    { name: 'Puxada na polia (supinada)', tip: 'Pegada supinada ativa mais o bíceps. Puxe até o peito, controle a subida.', series: '3 × 10–12', rest: 75, muscles: 'Latíssimo · Bíceps' },
+    { name: 'Crucifixo inverso c/ halteres', tip: 'Deitado de bruços no banco inclinado. Ativa deltoides posteriores e romboides.', series: '3 × 12–15', rest: 60, muscles: 'Deltoides post. · Romboides' },
+    { name: 'Rosca martelo c/ halteres', tip: 'Pegada neutra. Ativa braquial e braquiorradial além do bíceps.', series: '3 × 10–12', rest: 60, muscles: 'Bíceps · Braquial' },
+    { name: 'Tríceps testa c/ barra W', tip: 'Deitado no banco, barra desce até a testa. Não abra os cotovelos.', series: '3 × 12', rest: 60, muscles: 'Tríceps' },
+  ],
+  'lower-b': [
+    { name: 'Levantamento terra convencional', tip: 'Coluna neutra, barra rente ao corpo, empurre o chão com os pés. O maior exercício de posterior.', series: '4 × 5–6', rest: 120, muscles: 'Isquiotibiais · Glúteos · Lombares' },
+    { name: 'Stiff c/ halteres', tip: 'Joelhos levemente fletidos, desça os halteres pela frente até sentir o alongamento.', series: '3 × 10–12', rest: 90, muscles: 'Isquiotibiais · Glúteos' },
+    { name: 'Mesa flexora (cadeira)', tip: 'Isolamento dos isquiotibiais. Segure 1s no topo, desça em 3s. Previne lesões na corrida.', series: '3 × 12–15', rest: 60, muscles: 'Isquiotibiais' },
+    { name: 'Hip thrust c/ barra', tip: 'Ombros no banco, barra no quadril. Empurre o quadril para cima contraindo o glúteo no topo.', series: '4 × 10–12', rest: 75, muscles: 'Glúteos · Isquiotibiais' },
+    { name: 'Adução de quadril (máquina)', tip: 'Movimento controlado. Estabiliza o quadril durante a corrida e previne lesões.', series: '3 × 15', rest: 45, muscles: 'Adutores · Glúteos' },
+    { name: 'Abdominal supra + oblíquo', tip: '20 reps supra + 15 cada lado oblíquo sem pausa. Finaliza com core.', series: '3 × 20+15', rest: 45, muscles: 'Reto abdominal · Oblíquos' },
+  ],
+};
+
+function buildExList(key, containerId) {
+  const list = document.getElementById(containerId);
+  list.innerHTML = '';
+  (exercises[key] || []).forEach((ex, i) => {
+    const card = document.createElement('div');
+    card.className = 'ex-card';
+    const restLabel = ex.rest >= 60 ? (ex.rest === 120 ? '2 min' : ex.rest + 's') : ex.rest + 's';
+    card.innerHTML = `
+      <div class="ex-card-header" onclick="toggleEx(this)">
+        <span class="ex-num-badge">${String(i+1).padStart(2,'0')}</span>
+        <div class="ex-main">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-muscles">${ex.muscles}</div>
+        </div>
+        <div class="ex-meta">
+          <div class="ex-series">${ex.series}</div>
+          <div class="ex-rest-lbl">${restLabel} descanso</div>
+        </div>
+      </div>
+      <div class="ex-body">
+        <div class="ex-tip">${ex.tip}</div>
+        <button class="timer-btn" onclick="startTimer(${ex.rest},'Descanso — ${ex.name}',this)">⏱ Iniciar ${restLabel}</button>
+        <button class="done-btn" onclick="markDone(this)">Marcar feito</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function toggleEx(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function markDone(btn) {
+  btn.classList.toggle('done');
+  btn.textContent = btn.classList.contains('done') ? '✓ Feito' : 'Marcar feito';
+  btn.closest('.ex-card').classList.toggle('completed', btn.classList.contains('done'));
+}
+
+// Build all exercise lists
+buildExList('upper-a', 'exlist-upper-a');
+buildExList('lower-a', 'exlist-lower-a');
+buildExList('upper-b', 'exlist-upper-b');
+buildExList('lower-b', 'exlist-lower-b');
+
+// ── PROGRESSO ────────────────────────────────────────────────
+const logs = { '5k': [], barra: [], agach: [], terra: [], supino: [] };
+
+function addLog(key, input) {
+  const val = input.value.trim();
+  if (!val) return;
+  const now = new Date();
+  const date = now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+  logs[key].unshift({ val, date });
+  input.value = '';
+  renderLog(key);
+}
+
+function renderLog(key) {
+  const container = document.getElementById('log-' + key);
+  if (!logs[key].length) {
+    container.innerHTML = '<div class="empty-log">Nenhum registro ainda</div>';
+    return;
+  }
+  container.innerHTML = logs[key].slice(0, 8).map(e =>
+    `<div class="log-item"><span>${e.date}</span><span class="log-val">${e.val}</span></div>`
+  ).join('');
+}
+</script>
+</body>
+</html>
